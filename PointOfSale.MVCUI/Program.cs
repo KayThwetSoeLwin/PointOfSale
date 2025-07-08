@@ -1,8 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using PointOfSale.Database.AppDbContextModels;
-using PointOfSale.Domain.Features;
-using PointOfSale.Interfaces;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using FluentEmail.Smtp;
 using FluentEmail.Core;
