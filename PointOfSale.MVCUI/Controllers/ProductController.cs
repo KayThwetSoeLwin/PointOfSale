@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using PointOfSale.Shared.DTOs;
 using PointOfSale.Interfaces;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PointOfSale.MVCUI.Controllers
 {
+    //[Authorize(Roles = "Admin")]
     [Authorize]
     public class ProductController : Controller
     {
@@ -18,6 +20,17 @@ namespace PointOfSale.MVCUI.Controllers
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
             var pagedProducts = await _productService.GetPaginatedProductsAsync(pageNumber, pageSize);
+
+
+            var data = pagedProducts.Items;
+
+            var lst = data.Select(x => new SelectListItem
+            {
+                Text = x.ProductName,
+                Value = x.ProductCode
+            }).ToList();
+            ViewBag.Products = lst;
+
             return View(pagedProducts);
         }
 

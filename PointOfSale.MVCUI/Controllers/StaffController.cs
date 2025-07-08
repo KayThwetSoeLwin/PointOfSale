@@ -44,7 +44,8 @@ namespace PointOfSale.MVCUI.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, result.Data.Username)
+                    new Claim(ClaimTypes.Name, result.Data.Username),
+                    //new Claim(ClaimTypes.Role, "Admin")
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

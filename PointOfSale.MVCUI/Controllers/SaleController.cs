@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PointOfSale.Interfaces;
 using PointOfSale.Shared.DTOs;
 
@@ -18,6 +19,7 @@ namespace PointOfSale.MVCUI.Controllers
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
             var pagedSales = await _saleService.GetPaginatedSalesAsync(pageNumber, pageSize);
+
             return View(pagedSales);
         }
 

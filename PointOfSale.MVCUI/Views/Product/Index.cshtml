@@ -11,6 +11,8 @@
     <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">🏠 Back to Home</a>
 </div>
 
+@Html.DropDownList("Products", ViewBag.Products as List<SelectListItem>, "Select Product") 
+
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
