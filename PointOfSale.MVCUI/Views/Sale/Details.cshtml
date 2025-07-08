@@ -1,0 +1,56 @@
+﻿@model PointOfSale.Shared.DTOs.SaleDto
+@{
+    ViewData["Title"] = "Sale Details";
+    var details = ViewBag.Details as List<PointOfSale.Shared.DTOs.SaleDetailDto>;
+}
+
+<h2>🧾 Sale Details</h2>
+
+<div class="mb-3">
+    <label><strong>Voucher Code:</strong></label>
+    <span>@Model.VoucherCode</span>
+</div>
+<div class="mb-3">
+    <label><strong>Sale Date:</strong></label>
+    <span>@Model.SaleDate.ToString("yyyy-MM-dd")</span>
+</div>
+<div class="mb-3">
+    <label><strong>Total Amount:</strong></label>
+    <span>@Model.TotalAmount.ToString("C")</span>
+</div>
+
+<h4>🛒 Sale Items</h4>
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Product Code</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price (Each)</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (details != null && details.Any())
+        {
+            foreach (var item in details)
+            {
+                <tr>
+                    <td>@item.ProductCode</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@(item.Subtotal.ToString("C"))</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No items found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">← Back to Sale List</a>

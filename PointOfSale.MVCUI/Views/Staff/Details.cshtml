@@ -1,0 +1,26 @@
+﻿@model PointOfSale.Shared.DTOs.StaffDto
+
+@{
+    ViewData["Title"] = "Staff Details";
+}
+
+<h2>👤 Staff Details</h2>
+
+<div class="card p-3">
+    <dl class="row">
+        <dt class="col-sm-3">Username</dt>
+        <dd class="col-sm-9">@Model.Username</dd>
+
+        <dt class="col-sm-3">Full Name</dt>
+        <dd class="col-sm-9">@Model.FullName</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Designation</dt>
+        <dd class="col-sm-9">@Model.Designation</dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.StaffId" class="btn btn-primary">✏️ Edit</a>
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

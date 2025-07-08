@@ -1,0 +1,64 @@
+﻿@model PointOfSale.Shared.DTOs.SaleCreateRequest
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create Sale";
+}
+
+<h2>Create New Sale</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="VoucherCode" class="form-label"></label>
+        <input asp-for="VoucherCode" class="form-control" />
+        <span asp-validation-for="VoucherCode" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SaleDate" class="form-label"></label>
+        <input asp-for="SaleDate" class="form-control" type="date" />
+        <span asp-validation-for="SaleDate" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-4">Sale Items</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Code</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody id="item-rows">
+            <tr>
+                <td><input name="Items[0].ProductCode" class="form-control" required /></td>
+                <td><input name="Items[0].Quantity" class="form-control" type="number" min="1" required /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-sm btn-secondary" onclick="addRow()">➕ Add Item</button>
+    <br /><br />
+    <button type="submit" class="btn btn-primary">💾 Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        let rowIndex = 1;
+
+        function addRow() {
+            const table = document.getElementById("item-rows");
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td><input name="Items[${rowIndex}].ProductCode" class="form-control" required /></td>
+                <td><input name="Items[${rowIndex}].Quantity" class="form-control" type="number" min="1" required /></td>
+            `;
+
+            table.appendChild(row);
+            rowIndex++;
+        }
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@model PointOfSale.Shared.ViewModels.PagedResult<PointOfSale.Shared.DTOs.StaffDto>
+
+@{
+    ViewData["Title"] = "Staff List";
+}
+
+<h2 class="mb-3">👥 Staff List</h2>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-success me-2">➕ New Staff</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">🏠 Back to Home</a>
+</div>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Hire Date</th>
+            <th>Designation</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var staff in Model.Items)
+        {
+            <tr>
+                <td>@staff.Username</td>
+                <td>@staff.FullName</td>
+                <td>@staff.Email</td>
+                <td>@staff.HireDate?.ToString("yyyy-MM-dd")</td>
+                <td>@staff.Designation</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@staff.StaffId" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@staff.StaffId" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@staff.StaffId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Pagination Controls -->
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

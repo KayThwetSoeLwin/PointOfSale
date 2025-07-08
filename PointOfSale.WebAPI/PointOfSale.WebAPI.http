@@ -1,0 +1,6 @@
+@PointOfSale.WebAPI_HostAddress = http://localhost:5010
+
+GET {{PointOfSale.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

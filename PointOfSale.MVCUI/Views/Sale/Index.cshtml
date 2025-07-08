@@ -1,0 +1,50 @@
+﻿@model PointOfSale.Shared.ViewModels.PagedResult<PointOfSale.Shared.DTOs.SaleDto>
+@{
+    ViewData["Title"] = "Sale List";
+}
+
+<h2 class="mb-3">🧾 Sale List</h2>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-success me-2">➕ New Sale</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">🏠 Back to Home</a>
+</div>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Voucher Code</th>
+            <th>Sale Date</th>
+            <th>Total Amount</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model.Items)
+        {
+            <tr>
+                <td>@sale.VoucherCode</td>
+                <td>@sale.SaleDate.ToString("yyyy-MM-dd")</td>
+                <td>@sale.TotalAmount.ToString("C")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@sale.Id" class="btn btn-sm btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@sale.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
