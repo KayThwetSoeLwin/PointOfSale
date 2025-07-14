@@ -158,8 +158,10 @@ namespace PointOfSale.Domain.Features
                 Items = items,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = totalItems
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize)
             };
         }
+
     }
 }

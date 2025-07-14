@@ -1,22 +1,37 @@
-﻿namespace PointOfSale.MVCUI.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using PointOfSale.Interfaces;
+using PointOfSale.MVCUI.Filters;
+using PointOfSale.Shared.DTOs;
+using PointOfSale.Shared.ViewModels;
+using System.Threading.Tasks;
+
+namespace PointOfSale.MVCUI.Controllers;
 
 [Authorize]
 public class SaleController : Controller
 {
     private readonly ISaleService _saleService;
+    private readonly PaginationConfig _paginationConfig;
 
-    public SaleController(ISaleService saleService)
+    public SaleController(ISaleService saleService, IOptions<PaginationConfig> paginationOptions)
     {
         _saleService = saleService;
+        _paginationConfig = paginationOptions.Value;
     }
 
-    public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
+    [PermissionAuthorize("/Sale/Index")]
+    public async Task<IActionResult> Index(int? pageNumber, int? pageSize)
     {
-        var pagedSales = await _saleService.GetPaginatedSalesAsync(pageNumber, pageSize);
+        int currentPage = pageNumber ?? _paginationConfig.DefaultPageNumber;
+        int currentSize = pageSize ?? _paginationConfig.DefaultPageSize;
 
+        var pagedSales = await _saleService.GetPaginatedSalesAsync(currentPage, currentSize);
         return View(pagedSales);
     }
 
+    [PermissionAuthorize("/Sale/Create")]
     public IActionResult Create()
     {
         return View();
@@ -24,6 +39,7 @@ public class SaleController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [PermissionAuthorize("/Sale/Create")]
     public async Task<IActionResult> Create(SaleCreateRequest request)
     {
         if (!ModelState.IsValid)
@@ -40,6 +56,7 @@ public class SaleController : Controller
         return View(request);
     }
 
+    [PermissionAuthorize("/Sale/Details")]
     public async Task<IActionResult> Details(int id)
     {
         var sale = await _saleService.FindSaleAsync(id);
@@ -52,6 +69,7 @@ public class SaleController : Controller
         return View(sale);
     }
 
+    [PermissionAuthorize("/Sale/Delete")]
     public async Task<IActionResult> Delete(int id)
     {
         var sale = await _saleService.FindSaleAsync(id);
@@ -63,6 +81,7 @@ public class SaleController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [PermissionAuthorize("/Sale/Delete")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _saleService.DeleteSaleAsync(id);

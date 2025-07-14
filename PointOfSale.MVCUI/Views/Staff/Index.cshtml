@@ -1,10 +1,22 @@
 ﻿@model PointOfSale.Shared.ViewModels.PagedResult<PointOfSale.Shared.DTOs.StaffDto>
+@using PointOfSale.Shared.ViewModels
 
 @{
     ViewData["Title"] = "Staff List";
+    var paginationModel = new PaginationModel
+    {
+        PageNumber = Model.PageNumber,
+        TotalPages = Model.TotalPages,
+        ActionName = "Index"
+    };
 }
 
 <h2 class="mb-3">👥 Staff List</h2>
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success">@ViewBag.Success</div>
+}
 
 <div class="mb-3">
     <a asp-action="Create" class="btn btn-success me-2">➕ New Staff</a>
@@ -19,6 +31,7 @@
             <th>Email</th>
             <th>Hire Date</th>
             <th>Designation</th>
+            <th>Role</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -31,27 +44,17 @@
                 <td>@staff.Email</td>
                 <td>@staff.HireDate?.ToString("yyyy-MM-dd")</td>
                 <td>@staff.Designation</td>
+                <td>@staff.RoleName</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@staff.StaffId" class="btn btn-sm btn-info">Details</a>
-                    <a asp-action="Edit" asp-route-id="@staff.StaffId" class="btn btn-sm btn-primary">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@staff.StaffId" class="btn btn-sm btn-danger">Delete</a>
+                    <a asp-action="Details" asp-route-id="@staff.StaffId" class="btn btn-sm btn-info">🔍</a>
+                    <a asp-action="Edit" asp-route-id="@staff.StaffId" class="btn btn-sm btn-primary">✏️</a>
+                    <a asp-action="Delete" asp-route-id="@staff.StaffId" class="btn btn-sm btn-danger">🗑️</a>
+                    <a asp-action="ResetPassword" asp-route-id="@staff.StaffId" class="btn btn-sm btn-dark">🔁 Reset</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<!-- Pagination Controls -->
-@if (Model.TotalPages > 1)
-{
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
-}
+<!-- ✅ Use shared pagination partial -->
+<partial name="_Pagination" model="paginationModel" />

@@ -14,8 +14,13 @@
     <PackageReference Include="FluentEmail.Core" Version="3.0.2" />
     <PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
 	  <!-- Update package references to compatible versions -->
-	  <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.3.0" />
+	  <!-- <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.3.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

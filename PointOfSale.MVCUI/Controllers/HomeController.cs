@@ -13,7 +13,10 @@ public class HomeController : Controller
     {
         return View();
     }
-
+    public IActionResult AccessDenied()
+    {
+        return View(); // It will look for Views/Home/AccessDenied.cshtml
+    }
     public IActionResult Privacy()
     {
         return View();

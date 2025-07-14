@@ -8,5 +8,7 @@
         public string Email { get; set; } = string.Empty;
         public string Designation { get; set; } = string.Empty;
         public DateTime? HireDate { get; set; }  // Add this line
+        public int RoleId { get; set; }
+        public string RoleName { get; set; } = string.Empty;
     }
 }

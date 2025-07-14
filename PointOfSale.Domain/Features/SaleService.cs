@@ -165,13 +165,17 @@ namespace PointOfSale.Domain.Features
                 })
                 .ToListAsync();
 
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize); //  Add this
+
             return new PagedResult<SaleDto>
             {
                 Items = items,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalItems = totalItems
+                TotalItems = totalItems,
+                TotalPages = totalPages // Set TotalPages here
             };
         }
+
     }
 }

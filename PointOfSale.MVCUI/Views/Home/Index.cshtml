@@ -2,18 +2,19 @@
     ViewData["Title"] = "POS Dashboard";
 }
 
-<div class="container text-center mt-5">
-    <h1 class="mb-4">Point of Sale System</h1>
-
-    <div class="row justify-content-center">
-        <div class="col-md-4 mb-3">
-            <a href="/Product/Index" class="btn btn-primary btn-lg btn-block w-100">📦 Product Management</a>
-        </div>
-        <div class="col-md-4 mb-3">
-            <a href="/Sale/Index" class="btn btn-success btn-lg btn-block w-100">🧾 Sales Entry</a>
-        </div>
-        <div class="col-md-4 mb-3">
-            <a href="/Staff/Index" class="btn btn-info btn-lg btn-block w-100">👨‍💼 Staff Management</a>
-        </div>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 justify-content-center">
+    <div class="col d-flex">
+        <a href="/Product/Index" class="btn btn-primary btn-lg w-100 flex-fill">📦 Product Management</a>
     </div>
+    <div class="col d-flex">
+        <a href="/Sale/Index" class="btn btn-success btn-lg w-100 flex-fill">🧾 Sales Entry</a>
+    </div>
+    <div class="col d-flex">
+        <a href="/Staff/Index" class="btn btn-info btn-lg w-100 flex-fill">👨‍💼 Staff Management</a>
+    </div>
+    <div class="col d-flex">
+        <a href="/MenuPermission/Manage" class="btn btn-warning btn-lg w-100 flex-fill">🛡️ Manage Permissions</a>
+    </div>
+    
+
 </div>

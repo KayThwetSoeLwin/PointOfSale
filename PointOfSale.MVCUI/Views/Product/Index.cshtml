@@ -11,7 +11,7 @@
     <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">🏠 Back to Home</a>
 </div>
 
-@Html.DropDownList("Products", ViewBag.Products as List<SelectListItem>, "Select Product") 
+
 
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
@@ -40,16 +40,10 @@
     </tbody>
 </table>
 
-@if (Model.TotalPages > 1)
+<!-- ✅ NEW PAGINATION PARTIAL -->
+@await Html.PartialAsync("_Pagination", new PointOfSale.Shared.ViewModels.PaginationModel
 {
-    <nav>
-        <ul class="pagination">
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
-}
+    PageNumber = Model.PageNumber,
+    TotalPages = Model.TotalPages,
+    ActionName = "Index"
+})

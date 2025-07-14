@@ -1,6 +1,14 @@
 ﻿@model PointOfSale.Shared.ViewModels.PagedResult<PointOfSale.Shared.DTOs.SaleDto>
+@using PointOfSale.Shared.ViewModels
+
 @{
     ViewData["Title"] = "Sale List";
+    var paginationModel = new PaginationModel
+    {
+        PageNumber = Model.PageNumber,
+        TotalPages = Model.TotalPages,
+        ActionName = "Index"
+    };
 }
 
 <h2 class="mb-3">🧾 Sale List</h2>
@@ -35,16 +43,5 @@
     </tbody>
 </table>
 
-@if (Model.TotalPages > 1)
-{
-    <nav>
-        <ul class="pagination">
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-                </li>
-            }
-        </ul>
-    </nav>
-}
+<!-- ✅ Shared pagination -->
+<partial name="_Pagination" model="paginationModel" />

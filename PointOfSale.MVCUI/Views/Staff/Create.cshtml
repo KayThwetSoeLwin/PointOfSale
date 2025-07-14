@@ -1,4 +1,4 @@
-﻿@model PointOfSale.Shared.DTOs.StaffCreateRequestModel
+﻿@model PointOfSale.MVCUI.ViewModels.StaffCreateViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -9,8 +9,9 @@
 
 <form asp-action="Create" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <div class="mb-3">
-        <label asp-for="Username" class="form-label"></label>
+        <label asp-for="Username" class="form-label">Username</label>
         <input asp-for="Username" class="form-control" />
         <span asp-validation-for="Username" class="text-danger"></span>
     </div>
@@ -19,31 +20,39 @@
         <label asp-for="Password" class="form-label">Password</label>
         <input asp-for="Password" type="password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
-
     </div>
 
     <div class="mb-3">
-        <label asp-for="FullName" class="form-label"></label>
+        <label asp-for="FullName" class="form-label">Full Name</label>
         <input asp-for="FullName" class="form-control" />
         <span asp-validation-for="FullName" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Email" class="form-label"></label>
+        <label asp-for="Email" class="form-label">Email</label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="HireDate" class="form-label"></label>
+        <label asp-for="HireDate" class="form-label">Hire Date</label>
         <input asp-for="HireDate" class="form-control" type="date" />
         <span asp-validation-for="HireDate" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label asp-for="Designation" class="form-label"></label>
+        <label asp-for="Designation" class="form-label">Designation</label>
         <input asp-for="Designation" class="form-control" />
         <span asp-validation-for="Designation" class="text-danger"></span>
+    </div>
+
+    <!-- ✅ Role Dropdown -->
+    <div class="mb-3">
+        <label asp-for="RoleId" class="form-label">Role</label>
+        <select asp-for="RoleId" class="form-control" asp-items="Model.Roles">
+            <option value="">-- Select Role --</option>
+        </select>
+        <span asp-validation-for="RoleId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">💾 Save</button>

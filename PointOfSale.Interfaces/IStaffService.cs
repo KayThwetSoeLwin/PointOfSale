@@ -14,5 +14,8 @@ namespace PointOfSale.Interfaces
         //  NEW: Paginated staff list
         Task<PagedResult<StaffDto>> GetPaginatedStaffAsync(int pageNumber, int pageSize);
         Task<LoginResult> LoginForApiAsync(StaffLoginRequestModel requestModel);
+        Task<BaseResponse> ResetPasswordAsync(StaffResetPasswordRequestModel request);
+        Task<BaseResponse> ResetPasswordByAdminAsync(int staffId, string newPassword);
+
     }
 }

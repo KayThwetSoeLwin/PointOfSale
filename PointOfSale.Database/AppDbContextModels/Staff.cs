@@ -24,4 +24,6 @@ public partial class Staff
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? ModifiedAt { get; set; }
+    public int RoleId { get; set; }  // New field for role-based access
+    public Role Role { get; set; }
 }

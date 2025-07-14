@@ -1,20 +1,35 @@
-﻿namespace PointOfSale.MVCUI.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
+using PointOfSale.Interfaces;
+using PointOfSale.MVCUI.Filters;
+using PointOfSale.Shared.DTOs;
+using PointOfSale.Shared.ViewModels;
+using System.Linq;
+using System.Threading.Tasks;
 
-//[Authorize(Roles = "Admin")]
+namespace PointOfSale.MVCUI.Controllers;
+
 [Authorize]
 public class ProductController : Controller
 {
     private readonly IProductService _productService;
+    private readonly PaginationConfig _paginationConfig;
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductService productService, IOptions<PaginationConfig> paginationOptions)
     {
         _productService = productService;
+        _paginationConfig = paginationOptions.Value;
     }
 
-    public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
+    [PermissionAuthorize("/Product/Index")]
+    public async Task<IActionResult> Index(int? pageNumber, int? pageSize)
     {
-        var pagedProducts = await _productService.GetPaginatedProductsAsync(pageNumber, pageSize);
+        int currentPage = pageNumber ?? _paginationConfig.DefaultPageNumber;
+        int currentSize = pageSize ?? _paginationConfig.DefaultPageSize;
 
+        var pagedProducts = await _productService.GetPaginatedProductsAsync(currentPage, currentSize);
 
         var data = pagedProducts.Items;
 
@@ -23,11 +38,13 @@ public class ProductController : Controller
             Text = x.ProductName,
             Value = x.ProductCode
         }).ToList();
+
         ViewBag.Products = lst;
 
         return View(pagedProducts);
     }
 
+    [PermissionAuthorize("/Product/Create")]
     public IActionResult Create()
     {
         return View();
@@ -35,6 +52,7 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [PermissionAuthorize("/Product/Create")]
     public async Task<IActionResult> Create(ProductCreateRequestModel product)
     {
         if (!ModelState.IsValid)
@@ -49,6 +67,7 @@ public class ProductController : Controller
         return View(product);
     }
 
+    [PermissionAuthorize("/Product/Edit")]
     public async Task<IActionResult> Edit(string code)
     {
         var product = await _productService.FindProductAsync(code);
@@ -68,6 +87,7 @@ public class ProductController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [PermissionAuthorize("/Product/Edit")]
     public async Task<IActionResult> Edit(string code, ProductUpdateRequestModel request)
     {
         if (!ModelState.IsValid)
@@ -82,6 +102,7 @@ public class ProductController : Controller
         return View(request);
     }
 
+    [PermissionAuthorize("/Product/Delete")]
     public async Task<IActionResult> Delete(string code)
     {
         var product = await _productService.FindProductAsync(code);
@@ -93,6 +114,7 @@ public class ProductController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [PermissionAuthorize("/Product/Delete")]
     public async Task<IActionResult> DeleteConfirmed(string code)
     {
         await _productService.DeleteProductAsync(code);

@@ -1,0 +1,64 @@
+﻿@model PointOfSale.Shared.ViewModels.RolePermissionManageViewModel
+
+@{
+    ViewData["Title"] = "Manage Menu Permissions";
+}
+
+<h2 class="mb-4">🔐 Manage Menu Permissions</h2>
+
+<form asp-action="Manage" method="get" class="mb-4">
+    <div class="d-flex align-items-end gap-3 flex-wrap">
+        <div style="max-width: 300px;">
+            <label for="roleId" class="form-label">Select Role:</label>
+            <select id="roleId" name="roleId" class="form-select" onchange="this.form.submit();">
+                <option value="">-- Choose a Role --</option>
+                @foreach (var item in ViewBag.Roles as SelectList)
+                {
+                    bool isSelected = Model != null && Model.SelectedRoleId.ToString() == item.Value;
+                    <option value="@item.Value" selected="@(isSelected ? "selected" : null)">@item.Text</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label class="d-block invisible">Back</label> <!-- Keeps vertical alignment -->
+            <a href="/Home/Index" class="btn btn-outline-secondary">🏠 Back to Home</a>
+        </div>
+    </div>
+</form>
+
+@if (Model != null)
+{
+    <form asp-action="Manage" method="post">
+        <input type="hidden" asp-for="SelectedRoleId" />
+        <input type="hidden" asp-for="SelectedRoleName" />
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Menu Name</th>
+                    <th class="text-center">Can Access?</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Permissions.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.Permissions[i].MenuName</td>
+                        <td class="text-center">
+                            <input type="checkbox" asp-for="Permissions[@i].CanAccess" class="form-check-input" />
+                            <input type="hidden" asp-for="Permissions[@i].MenuId" />
+                            <input type="hidden" asp-for="Permissions[@i].MenuName" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary">💾 Save Permissions</button>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success mt-3">@TempData["Success"]</div>
+        }
+    </form>
+}

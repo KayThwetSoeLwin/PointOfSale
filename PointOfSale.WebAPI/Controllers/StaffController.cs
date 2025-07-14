@@ -31,7 +31,7 @@ namespace PointOfSale.WebAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] StaffLoginRequestModel requestModel)
         {
-            var result = await _service.LoginForApiAsync(requestModel);  // ✅ Use correct field name
+            var result = await _service.LoginForApiAsync(requestModel);
 
             if (!result.IsSuccess)
                 return Unauthorized(result);
@@ -50,7 +50,9 @@ namespace PointOfSale.WebAPI.Controllers
                 Username = s.Username,
                 FullName = s.FullName,
                 Email = s.Email,
-                Designation = s.Designation
+                Designation = s.Designation,
+                RoleId = s.RoleId,
+                RoleName = s.RoleName
             }).ToList();
 
             return Ok(new { message = "Staff list retrieved successfully", data = result });
@@ -69,7 +71,9 @@ namespace PointOfSale.WebAPI.Controllers
                 Username = staff.Username,
                 FullName = staff.FullName,
                 Email = staff.Email,
-                Designation = staff.Designation
+                Designation = staff.Designation,
+                RoleId = staff.RoleId,
+                RoleName = staff.RoleName
             };
 
             return Ok(new { message = "Staff found", data = result });
@@ -126,7 +130,5 @@ namespace PointOfSale.WebAPI.Controllers
                 ? Ok(new { message = "Staff deleted successfully" })
                 : NotFound(new { message = "Staff not found" });
         }
-
-        
     }
 }

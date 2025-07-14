@@ -1,4 +1,4 @@
-﻿@model PointOfSale.Shared.DTOs.StaffUpdateRequestModel
+﻿@model PointOfSale.MVCUI.ViewModels.StaffUpdateViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -26,6 +26,22 @@
         <label asp-for="Designation" class="form-label">Designation</label>
         <input asp-for="Designation" class="form-control" />
         <span asp-validation-for="Designation" class="text-danger"></span>
+    </div>
+
+    <!-- ✅ Fix Hire Date -->
+    <div class="mb-3">
+        <label asp-for="HireDate" class="form-label">Hire Date</label>
+        <input asp-for="HireDate" class="form-control" type="date" />
+        <span asp-validation-for="HireDate" class="text-danger"></span>
+    </div>
+
+    <!-- ✅ Fix Role selection -->
+    <div class="mb-3">
+        <label asp-for="RoleId" class="form-label">Role</label>
+        <select asp-for="RoleId" class="form-control" asp-items="Model.Roles">
+            <option value="">-- Select Role --</option>
+        </select>
+        <span asp-validation-for="RoleId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">📂 Update</button>

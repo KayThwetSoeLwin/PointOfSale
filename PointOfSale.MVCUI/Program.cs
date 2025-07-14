@@ -30,6 +30,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IMenuPermissionService, MenuPermissionService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
 
 // Add MVC Controllers with Views
 builder.Services.AddControllersWithViews();
@@ -43,6 +46,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromDays(30);
         options.SlidingExpiration = true;
     });
+builder.Services.Configure<PaginationConfig>(
+    builder.Configuration.GetSection("AppSettings"));
+
 
 builder.Services.AddAuthorization(options =>
 {
